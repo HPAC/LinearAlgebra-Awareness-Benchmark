@@ -1,6 +1,7 @@
 import tensorflow as tf
 import os
 import time
+import numpy as np
 
 class bcolors:
     WARNING = '\033[93m'
@@ -24,44 +25,34 @@ DTYPE = tf.float32
 
 
 #@tf.function
-def cse_check_non_optimized(A,B,C,D):
-    
-    start =  tf.timestamp()
-    with tf.control_dependencies([start]):
-        tmp1 = tf.add(tf.matmul(A,B),C)
-        tmp2 = tf.add(tf.matmul(A,B),D)
-        ret = tf.add(tmp1, tmp2)
-    with tf.control_dependencies([ret]):
-        end =  tf.timestamp()
-        tf.print("Non Optimized : ", end-start)
-    
+def actual_expr(A,B):
+    ret = tf.transpose(tf.transpose(A)@B)@(tf.transpose(A)@B) 
     return ret
 
 #@tf.function
-def cse_check_optimized(A,B,C,D):
-
-    start =  tf.timestamp()
-    with tf.control_dependencies([start]):
-        tmp1 = tf.matmul(A,B)
-        tmp2 = tf.add(tmp1,C)
-        tmp3 = tf.add(tmp1,D)
-        ret = tf.add(tmp2, tmp3)
-    with tf.control_dependencies([ret]):
-        end =  tf.timestamp()
-        tf.print("Optimized : ", end-start)
-
-    
+def simplified_expr(A,B):
+    tmp = tf.transpose(A)@B
+    ret = tf.transpose(tmp)@tmp
     return ret
-
 
 A = tf.random.normal([n, n], dtype=DTYPE)
 B = tf.random.normal([n, n], dtype=DTYPE)
-C = tf.random.normal([n, n], dtype=DTYPE)
-D = tf.random.normal([n, n], dtype=DTYPE)
 
 
 for i in range(reps):
-   ret = cse_check_non_optimized(A,B,C,D)
-   ret = cse_check_optimized(A,B,C,D)
+   start = time.perf_counter()
+   ret1 = actual_expr(A,B)
+   end = time.perf_counter()
+   print("Actual : ", end-start) 
+
+   start = time.perf_counter()
+   ret2 = simplified_expr(A,B)
+   end = time.perf_counter()
+   print("Simplified : ", end-start) 
+
+   #ret2 = simplified_expr(A,B)
+
+   #tf.assert_equal(np.round(ret1.numpy(),3), np.round(ret2.numpy(),3))
+    
    tf.print("\n")
 

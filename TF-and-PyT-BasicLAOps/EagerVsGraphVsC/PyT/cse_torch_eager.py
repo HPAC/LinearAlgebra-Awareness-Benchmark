@@ -19,42 +19,36 @@ reps = 10
 DTYPE = torch.float32
 
 
-
-def cse_check_non_optimized(A,B,C,D):
-    
-    start = time.perf_counter()
-    tmp1 = torch.add(torch.matmul(A,B),C)
-    tmp2 = torch.add(torch.matmul(A,B),D)
-    ret = torch.add(tmp1, tmp2)
-    end = time.perf_counter()
-
-    print("Non Optimized : ", end-start)
-    
+#@torch.jit.script
+def actual_expr(A,B):
+    ret = torch.t(torch.t(A)@B)@(torch.t(A)@B)
     return ret
 
-
-def cse_check_optimized(A,B,C,D):
-
-    start = time.perf_counter()
-    tmp1 = torch.matmul(A,B)
-    tmp2 = torch.add(tmp1,C)
-    tmp3 = torch.add(tmp1,D)
-    ret = torch.add(tmp2, tmp3)
-    end = time.perf_counter()
-
-    print("Optimized : ", end-start)
-
+#@torch.jit.script
+def simplified_expr(A,B):
+    tmp = torch.t(A)@B
+    ret = torch.t(tmp)@tmp
     return ret
 
 
 A = torch.randn([n, n], dtype=DTYPE)
 B = torch.randn([n, n], dtype=DTYPE)
-C = torch.randn([n, n], dtype=DTYPE)
-D = torch.randn([n, n], dtype=DTYPE)
 
 
 for i in range(reps):
-   ret = cse_check_non_optimized(A,B,C,D)
-   ret = cse_check_optimized(A,B,C,D)
+   start = time.perf_counter()
+   ret1 = actual_expr(A,B)
+   end = time.perf_counter()
+   print("CSE Non Optimized : ", end-start) 
+
+   start = time.perf_counter()
+   ret1 = simplified_expr(A,B)
+   end = time.perf_counter()
+   print("CSE Optimized : ", end-start) 
+
+   #ret2 = simplified_expr(A,B)
+
+   #tf.assert_equal(ret1, ret2)
+    
    print("\n")
 

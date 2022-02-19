@@ -26,13 +26,13 @@ DTYPE = tf.float32
 
 @tf.function
 def actual_expr(A,B):
-    ret = tf.transpose(A)@B + tf.transpose(A)@B 
+    ret = tf.transpose(tf.transpose(A)@B)@(tf.transpose(A)@B) 
     return ret
 
 @tf.function
 def simplified_expr(A,B):
     tmp = tf.transpose(A)@B
-    ret = tmp+tmp
+    ret = tf.transpose(tmp)@tmp
     return ret
 
 A = tf.random.normal([n, n], dtype=DTYPE)

@@ -39,6 +39,7 @@ export LAMP_C_OUTPUT_DIR=results/c_${OMP_NUM_THREADS}.txt
 make clean
 make all -j 24
 
-echo "algorithm;m;k;n;C;cs_time"                    > ${LAMP_C_OUTPUT_DIR}
-./bin/gemm_noup.x  $LAMP_N $LAMP_N $LAMP_N          >> ${LAMP_C_OUTPUT_DIR}
+# echo "algorithm;m;k;n;C;cs_time"                    > ${LAMP_C_OUTPUT_DIR}
+#./bin/gemm_noup.x  $LAMP_N $LAMP_N $LAMP_N          >> ${LAMP_C_OUTPUT_DIR}
+./bin/gemm_noup.x  $LAMP_N $LAMP_N $LAMP_N          
 

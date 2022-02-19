@@ -7,7 +7,7 @@ class bcolors:
     ENDC = '\033[0m'
 
 
-#@torch.jit.script
+@torch.jit.script
 def gemm_torch(A,B):
     ret = A@B
     return ret
