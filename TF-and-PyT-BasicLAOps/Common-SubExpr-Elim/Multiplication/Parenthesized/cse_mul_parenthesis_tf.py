@@ -1,6 +1,7 @@
 import tensorflow as tf
 import os
 import time
+import numpy as np
 
 class bcolors:
     WARNING = '\033[93m'
@@ -24,41 +25,34 @@ DTYPE = tf.float32
 
 
 @tf.function
-def mc_cse_non_optimized(A,B):
-    
-    start =  tf.timestamp()
-    with tf.control_dependencies([start]):
-        #ret = tf.matmul(tf.matmul(A,B),tf.matmul(A,B))
-        ret = tf.transpose(A@B)@A@B
-    with tf.control_dependencies([ret]):
-        end =  tf.timestamp()
-        tf.print("Non Optimized : ", end-start)
-    
+def actual_expr(A,B):
+    ret = tf.transpose(tf.transpose(A)@B)@(tf.transpose(A)@B) 
     return ret
 
 @tf.function
-def mc_cse_optimized(A,B):
-
-    start =  tf.timestamp()
-    with tf.control_dependencies([start]):
-        #tmp1 = A@B
-        #ret = tmp1@tmp1
-        ret = tf.transpose(A@B)@(A@B)
-    with tf.control_dependencies([ret]):
-        end =  tf.timestamp()
-        tf.print("Optimized : ", end-start)
-
-    
+def simplified_expr(A,B):
+    tmp = tf.transpose(A)@B
+    ret = tf.transpose(tmp)@tmp
     return ret
-
 
 A = tf.random.normal([n, n], dtype=DTYPE)
 B = tf.random.normal([n, n], dtype=DTYPE)
 
 
-
 for i in range(reps):
-   ret = mc_cse_non_optimized(A,B)
-   ret = mc_cse_optimized(A,B)
+   start = time.perf_counter()
+   ret1 = actual_expr(A,B)
+   end = time.perf_counter()
+   print("Non Optimized : ", end-start) 
+
+   start = time.perf_counter()
+   ret2 = simplified_expr(A,B)
+   end = time.perf_counter()
+   print("Optimized : ", end-start) 
+
+   #ret2 = simplified_expr(A,B)
+
+   #tf.assert_equal(np.round(ret1.numpy(),3), np.round(ret2.numpy(),3))
+    
    tf.print("\n")
 

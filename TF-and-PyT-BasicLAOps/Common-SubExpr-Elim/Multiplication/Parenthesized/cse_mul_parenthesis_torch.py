@@ -21,12 +21,13 @@ DTYPE = torch.float32
 
 @torch.jit.script
 def mc_cse_non_optimized(A,B):
-    ret = torch.t(A@B)@A@B    
+    ret = torch.t(torch.t(A)@B)@(torch.t(A)@B)    
     return ret
 
 @torch.jit.script
 def mc_cse_optimized(A,B):
-    ret = torch.t(A@B)@(A@B)
+    tmp = torch.t(A)@B
+    ret = torch.t(tmp)@tmp
     return ret
 
 
