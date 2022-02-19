@@ -20,32 +20,29 @@ DTYPE = torch.float32
 
 
 @torch.jit.script
-def mc_non_optimized(A,B,C):
-    #ret = A@B@C
-    ret = torch.linalg.multi_dot([A,B,C])    
+def no_parenthesis(H,y):
+    ret = torch.t(y)@torch.t(H)@H 
     return ret
 
 @torch.jit.script
-def mc_optimized(A,B,C):
-    ret = A@(B@C)
+def multidot(H,y):
+    ret = torch.linalg.multi_dot([torch.t(y), torch.t(H), H]) 
     return ret
 
 
-A = torch.randn([n, n], dtype=DTYPE)
-B = torch.randn([n, n], dtype=DTYPE)
-C = torch.randn([n, int(n/5)], dtype=DTYPE)
+H = torch.randn([n, n], dtype=DTYPE)
+y = torch.randn([n, 1], dtype=DTYPE)
 
 
 for i in range(reps):
    start = time.perf_counter()
-   ret = mc_non_optimized(A,B,C)
+   ret = no_parenthesis(H,y)
    end = time.perf_counter()
-   print("Non Optimized : ", end-start)
+   print("No Parenthesis : ", end-start)
 
    start = time.perf_counter()
-   ret = mc_optimized(A,B,C)
+   ret = multidot(H,y)
    end = time.perf_counter()
-   print("Optimized : ", end-start)
-   
-   print("\n")
+   print("Multidot : ", end-start)
 
+   print("\n")
