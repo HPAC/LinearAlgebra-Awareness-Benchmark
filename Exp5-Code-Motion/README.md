@@ -1,7 +1,5 @@
 ### Experiment 5: Code Motion
 
-**Performance Measurements:** Single threaded Execution time (in sec) on Intel AVX-2 x86 CPU. We report the median of 20 stable repetitions.
-
 
 |File | Expression    | TF (naive / recommended)  | PyT (naive / recommended)|
 |-----|---------------|---------------------------|--------------|
@@ -12,3 +10,22 @@
 > A and B are general square marices of size 3000
 
 > V is a 3x3000
+
+#### Running the experiments
+
+Loop invaraint code motion
+```
+cd Loop-inv-code/
+python loop_inv_tf.py
+python loop_inv_torch.py
+```
+
+Partial operand access
+```
+cd partial-op-access/
+python partial_op_sum_tf.py
+python partial_op_sum_torch.py
+
+python partial_op_prod_tf.py
+python partial_op_prod_torch.py
+```
