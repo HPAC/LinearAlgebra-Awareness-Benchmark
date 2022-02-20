@@ -1,8 +1,8 @@
 
-### Experiment 2: Optimization of Matrix Chains
+## Experiment 2: Optimization of Matrix Chains
 
 
-#### Running the experiments
+### Running the experiments
 
 Right to Left
 
@@ -37,7 +37,14 @@ python mixed_parenthesis_torch.py
 python no_parenthesis_torch.py
 ```
 
-#### Performance on Intel Xeon Platinum 8160 CPU
+#### Operands
+
+> H is a square matrix of size 3000
+
+> x,y are vectors of size 3000
+
+
+### Performance on Intel Xeon Platinum 8160 CPU
 
 Right to Left Parenthesization
 
@@ -60,12 +67,8 @@ Mixed Parenthesization
 |mixed_parenthesis|(H<sup>T</sup>y)(x<sup>T</sup>H)  | 0.01|0.01| -|
 
 
-> H is a square matrix of size 3000
 
-> x,y are vectors of size 3000
-
-
-#### Performance on Intel Xeon E5-2630 CPU
+### Performance on Intel Xeon E5-2630 CPU
 
 Right to Left Parenthesization
 
