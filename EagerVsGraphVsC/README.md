@@ -3,21 +3,22 @@
 
 #### Running the experiments
 
-TF
+sgemm
 ```
-cd TF/
+cd sgemm/
 python sgemm_tf_eager.py
 python sgemm_tf_graphMode.py
 
-python cse_tf_eager.py
-python cse_tf_graphMode.py
-```
-
-PyT
-```
-cd PyT/
 python sgemm_torch_eager.py
 python sgemm_torch_graphMode.py
+```
+
+cse
+```
+cd cse/
+
+python cse_tf_eager.py
+python cse_tf_graphMode.py
 
 python cse_torch_eager.py
 python cse_torch_graphMode.py
