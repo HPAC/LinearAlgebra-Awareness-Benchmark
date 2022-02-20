@@ -9,7 +9,7 @@ class bcolors:
 
 
 @tf.function
-def tridiagmm_tf(A,B):
+def tridiagmm_optimized_tf(A,B):
     #ret = A@B
     ret = tf.linalg.tridiagonal_matmul(A, B, diagonals_format='matrix')
     return ret
@@ -43,19 +43,19 @@ if __name__ == "__main__":
     B = tf.random.normal([N, N], dtype=DTYPE)
 
     #Building Trace
-    ret = tridiagmm_tf(A,B)
+    ret = tridiagmm_optimized_tf(A,B)
     check = A@B
 
     for i in range(REPS):
         start = time.perf_counter()
-        ret = tridiagmm_tf(A,B)
+        ret = tridiagmm_optimized_tf(A,B)
         end = time.perf_counter()
-        print("tridiagmm_tf : ", end-start)
+        print("tridiagmm_optimized : ", end-start)
 
         start = time.perf_counter()
         ret1 = tridiag_matmul_tf(A,B)
         end = time.perf_counter()
-        print("tridiagmm_matmul_tf : ", end-start)
+        print("tridiagmm_matmul : ", end-start)
 
         print('\n')
     
