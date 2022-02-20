@@ -9,4 +9,4 @@
 |cse_mul_parenthesis|(A<sup>T</sup>B)<sup>T</sup>(A<sup>T</sup>B)| 1.08| 1.09|  
 |cse_mul_no_parenthesis|(A<sup>T</sup>B)<sup>T</sup>A<sup>T</sup>B| 1.61| 1.62|  
 
-> A and B are general matrices of size 3000
+> A and B are square matrices of size 3000
