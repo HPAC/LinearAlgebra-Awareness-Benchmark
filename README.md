@@ -1,7 +1,29 @@
 # LinearAlgebra-Awareness-Benchmark
 
+### Prerequisites
 
-### Performance comparision: Eager mode vs Graph mode
+  TensorFlow and PyTorch with MKL support
+  
+  > [**TensorFlow: Installation instructions**](https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html)
+
+  > [**PyTorch: Installation instructions**](https://pytorch.org/get-started/locally/)
+
+### Running the Experiments
+
+> More details in the respective experiment folders
+
+
+
+### Performance on Intel Xeon CPU:
+
+  Hardware:   <br/>
+  Number of Threads: 1 <br/>
+  Reporting statistic: Median of 20 stable repetitions. <br/>
+  TensorFlow Version: 2.7.0 <br/>
+  PyTorch Version: 1.10.0 <br/>
+  MKL: Intel OneAPI 2022.0.0 <br/>
+
+#### Performance comparision: Eager mode vs Graph mode
 
 |File | Expression    | C   | TF (Eager) | PyT (Eager) | TF (Graph) | PyT (Graph) |
 |-----|---------------|-----|------------|-------------|------------|-------------|
@@ -10,7 +32,7 @@
 
 > A and B are general square matrices of size 3000
 
-### Experiment 1 : Common Subexpression Elimination
+#### Experiment 1 : Common Subexpression Elimination
 
 |File | Expression    | TF  | PyT |
 |-----|---------------|-----|-----|
@@ -22,22 +44,22 @@
 > A and B are square matrices of size 3000
 
 
-### Experiment 2: Optimization of Matrix Chains
+#### Experiment 2: Optimization of Matrix Chains
 
-#### Right to Left Parenthesization
+##### Right to Left Parenthesization
 
 |File | Expression    | TF (matmul)  | PyT (matmul) | PyT (multi_dot)|
 |-----|---------------|--------------|--------------|----------------|
 |no_parenthesis|H<sup>T</sup>Hx | 0.52|0.53| 0.003 
 |rtol_parenthesis|H<sup>T</sup>(Hx) | 0.003|0.004| -  
 
-#### Left to Right Parenthesization
+##### Left to Right Parenthesization
 |File | Expression    | TF (matmul)  | PyT (matmul) | PyT (multi_dot)|
 |-----|---------------|--------------|--------------|----------------|
 |no_parenthesis|y<sup>T</sup>H<sup>T</sup>H | 0.003|0.003|  0.003|
 |ltor_parenthesis|(y<sup>T</sup>H)<sup>T</sup>H | 0.003|0.004| -|
 
-#### Mixed Parenthesization
+##### Mixed Parenthesization
 
 |File | Expression    | TF (matmul)  | PyT (matmul) | PyT (multi_dot)|
 |-----|---------------|--------------|--------------|----------------|
@@ -49,7 +71,7 @@
 
 > x,y are vectors of size 3000
 
-### Experiment 3: Matrix Properties
+#### Experiment 3: Matrix Properties
 
 Matrix multiplication AB with matrices having special properties
 
@@ -72,7 +94,7 @@ Matrix multiplication AB with matrices having special properties
 
 > A,L,T,D are square matrices of size 3000.
 
-### Experiment 4: Algebraic Manipulations
+#### Experiment 4: Algebraic Manipulations
 
 
 |File | Expression    | TF (LHS / RHS)  | PyT (LHS / RHS) |
@@ -85,7 +107,7 @@ Matrix multiplication AB with matrices having special properties
 
 > Blocked matrices: A<sub>B</sub> = [[A<sub>1</sub>, 0], [0, A<sub>1</sub>]], B<sub>B</sub> = [[B<sub>1</sub>, 0], [0, B<sub>1</sub>]]
 
-### Experiment 5: Code Motion
+#### Experiment 5: Code Motion
 
 
 |File | Expression    | TF (naive / recommended)  | PyT (naive / recommended)|
