@@ -1,6 +1,6 @@
-### Experiment 1 : Common Subexpression Elimination
+## Experiment 1 : Common Subexpression Elimination
 
-#### Running the experiments
+### Running the experiments
 
 Addition
 ```
@@ -23,7 +23,11 @@ python cse_mul_no_parenthesis_tf.py
 python cse_mul_no_parenthesis_torch.py
 ```
 
-#### Performance on Intel Xeon Platinum 8160 CPU
+#### Operands
+
+A and B are square matrices of size 3000
+
+### Performance on Intel Xeon Platinum 8160 CPU
 
 |File | Expression    | TF  | PyT |
 |-----|---------------|-----|-----|
@@ -32,9 +36,8 @@ python cse_mul_no_parenthesis_torch.py
 |cse_mul_parenthesis|(A<sup>T</sup>B)<sup>T</sup>(A<sup>T</sup>B)| 0.78| 0.80|  
 |cse_mul_no_parenthesis|(A<sup>T</sup>B)<sup>T</sup>A<sup>T</sup>B| 1.17| 1.15|  
 
-> A and B are square matrices of size 3000
 
-#### Performance on Intel Xeon E5-2630 CPU
+### Performance on Intel Xeon E5-2630 CPU
 
 |File | Expression    | TF  | PyT |
 |-----|---------------|-----|-----|
