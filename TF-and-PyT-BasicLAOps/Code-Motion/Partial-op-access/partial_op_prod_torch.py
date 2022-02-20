@@ -39,16 +39,12 @@ for i in range(reps):
    start = time.perf_counter()
    ret1 = actual_expr(A,B)
    end = time.perf_counter()
-   print("Non Optimized : ", end-start) 
+   print("Actual : ", end-start) 
 
    start = time.perf_counter()
    ret1 = simplified_expr(A,B)
    end = time.perf_counter()
-   print("Optimized : ", end-start) 
-
-   #ret2 = simplified_expr(A,B)
-
-   #tf.assert_equal(ret1, ret2)
+   print("Simplified : ", end-start) 
     
    print("\n")
 

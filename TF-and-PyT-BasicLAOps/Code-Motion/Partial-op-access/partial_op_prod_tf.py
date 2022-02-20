@@ -25,37 +25,31 @@ DTYPE = tf.float32
 
 
 @tf.function
-def actual_expr(A,B,X):
-    for i in range(3):
-        ret = A@B + X[i]
+def actual_expr(A,B):
+    ret = (A@B)[2,2]
+    #tmp = A@B
+    #ret = tmp[2,2]
     return ret
 
 @tf.function
-def simplified_expr(A,B,X):
-    tmp = A@B
-    for i in range(3):
-        ret = tmp + X[i]
+def simplified_expr(A,B):
+    ret = tf.tensordot(A[2],B[:,2],1)
     return ret
 
 A = tf.random.normal([n, n], dtype=DTYPE)
 B = tf.random.normal([n, n], dtype=DTYPE)
-X = tf.random.normal([n, n], dtype=DTYPE)
 
 
 for i in range(reps):
    start = time.perf_counter()
-   ret1 = actual_expr(A,B,X)
+   ret1 = actual_expr(A,B)
    end = time.perf_counter()
    print("Actual : ", end-start) 
 
    start = time.perf_counter()
-   ret2 = simplified_expr(A,B,X)
+   ret2 = simplified_expr(A,B)
    end = time.perf_counter()
    print("Simplified : ", end-start) 
-
-   #ret2 = simplified_expr(A,B)
-
-   #tf.assert_equal(np.round(ret1.numpy(),3), np.round(ret2.numpy(),3))
     
    tf.print("\n")
 
