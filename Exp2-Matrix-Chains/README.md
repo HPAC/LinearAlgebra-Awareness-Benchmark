@@ -1,7 +1,6 @@
 
 ### Experiment 2: Optimization of Matrix Chains
 
-**Performance measurements:** Single threaded Execution time (in sec) on Intel AVX-2 x86 CPU. We report the median of 20 stable repetitions.
 
 #### Right to Left Parenthesization
 
