@@ -8,7 +8,7 @@
 |File | Expression    | TF (matmul)  | PyT (matmul) | PyT (multi_dot)|
 |-----|---------------|--------------|--------------|----------------|
 |no_parenthesis|H<sup>T</sup>Hx | 0.52|0.53| 0.003 
-|rtol_parenthesis|H<sup>T</sup>(Hx) | 0.003|0.004| -  
+|rtol_parenthesis|H<sup>T</sup>(Hx) | 0.003|0.004| -  |
 
 #### Left to Right Parenthesization
 |File | Expression    | TF (matmul)  | PyT (matmul) | PyT (multi_dot)|
@@ -28,4 +28,37 @@
 
 > x,y are vectors of size 3000
 
+#### Running the experiments
 
+Right to Left
+
+```
+cd RtoL/
+python rtol_parenthesis_tf.py
+python no_parenthesis_tf.py
+
+python rtol_parenthesis_torch.py
+python no_parenthesis_torch.py
+```
+
+Left to Right
+
+```
+cd LtoR/
+python ltor_parenthesis_tf.py
+python no_parenthesis_tf.py
+
+python ltor_parenthesis_torch.py
+python no_parenthesis_torch.py
+```
+
+Mixed
+
+```
+cd RtoL/
+python mixed_parenthesis_tf.py
+python no_parenthesis_tf.py
+
+python mixed_parenthesis_torch.py
+python no_parenthesis_torch.py
+```
