@@ -1,8 +1,8 @@
-### Experiment 4: Algebraic Manipulations
+## Experiment 4: Algebraic Manipulations
 
 
 
-#### Running the experiments
+### Running the experiments
 
 Distributivity
 ```
@@ -27,7 +27,7 @@ Distributivity: A and B are General square matrices of size 3000.
 
 Blocked matrices: A<sub>B</sub> = [[A<sub>1</sub>, 0], [0, A<sub>1</sub>]], B<sub>B</sub> = [[B<sub>1</sub>, 0], [0, B<sub>1</sub>]]
 
-#### Performance on Intel Xeon Platinum 8160 CPU
+### Performance on Intel Xeon Platinum 8160 CPU
 
 |File | Expression    | TF (LHS / RHS)  | PyT (LHS / RHS) |
 |-----|---------------|--------------|--------------|
@@ -35,7 +35,7 @@ Blocked matrices: A<sub>B</sub> = [[A<sub>1</sub>, 0], [0, A<sub>1</sub>]], B<su
 |distributivity_eq10|Ax - H<sup>T</sup>(Hx) = (A - H<sup>T</sup>H)x| 0.01 / 0.42|0.01 / 0.41| 
 |blocked_matrices|A<sub>B</sub>B<sub>B</sub> = [(A<sub>1</sub>B<sub>1</sub>),(A<sub>1</sub>B<sub>1</sub>)]<sup>T</sup>| 0.40 / 0.20|0.40 / 0.20| 
 
-#### Performance on Intel Xeon E5-2630 CPU
+### Performance on Intel Xeon E5-2630 CPU
 
 |File | Expression    | TF (LHS / RHS)  | PyT (LHS / RHS) |
 |-----|---------------|--------------|--------------|
