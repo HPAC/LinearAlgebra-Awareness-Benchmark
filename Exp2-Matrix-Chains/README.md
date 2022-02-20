@@ -1,7 +1,7 @@
 
-### Performance
+### Experiment 2: Optimization of Matrix Chains
 
-Single threaded Execution time (in sec) on Intel AVX-2 x86 CPU. We report the median of 20 stable repetitions.
+**Performance measurements:** Single threaded Execution time (in sec) on Intel AVX-2 x86 CPU. We report the median of 20 stable repetitions.
 
 #### Right to Left Parenthesization
 
@@ -22,5 +22,10 @@ Single threaded Execution time (in sec) on Intel AVX-2 x86 CPU. We report the me
 |-----|---------------|--------------|--------------|----------------|
 |no_parenthesis|H<sup>T</sup>yx<sup>T</sup>H | 0.54|0.54|  0.07|
 |mixed_parenthesis|(H<sup>T</sup>y)(x<sup>T</sup>H)  | 0.05|0.05| -|
+
+
+> H is a square matrix of size 3000
+
+> x,y are vectors of size 3000
 
 
