@@ -1,7 +1,7 @@
-### Experiment 3: Matrix Properties
+## Experiment 3: Matrix Properties
 
 
-#### Running the experiments
+### Running the experiments
 
 ```
 cd AB/
@@ -31,6 +31,8 @@ python diagmm_tf.py
 python diagmm_torch.py
 ```
 
+#### Operands
+
 Matrix multiplication AB with matrices having special properties
 
 > A : General Matrix
@@ -41,7 +43,9 @@ Matrix multiplication AB with matrices having special properties
 
 > D : Diagonal Matrix 
 
-#### Performance on Intel Xeon Platinum 8160 CPU
+A,L,T,D are square matrices of size 3000.
+
+### Performance on Intel Xeon Platinum 8160 CPU
 
 |File | Expression    | SciPy (blas) | TF (matmul)  | TF (optimized) | PyT (matmul)| PyT (optimized) |
 |-----|---------------|--------------|--------------|----------------| ---------------|--------------|
@@ -51,9 +55,8 @@ Matrix multiplication AB with matrices having special properties
 |tridiagmm|TB|0.20|0.41|0.02|0.40|n.a|
 |diagmm|DB|0.12|0.39|0.018|0.40|n.a|
 
-> A,L,T,D are square matrices of size 3000.
 
-#### Performance on Intel Xeon E5-2630 CPU
+### Performance on Intel Xeon E5-2630 CPU
 
 |File | Expression    | SciPy (blas) | TF (matmul)  | TF (optimized) | PyT (matmul)| PyT (optimized) |
 |-----|---------------|--------------|--------------|----------------| ---------------|--------------|
