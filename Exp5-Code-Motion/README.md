@@ -1,6 +1,6 @@
-### Experiment 5: Code Motion
+## Experiment 5: Code Motion
 
-#### Running the experiments
+### Running the experiments
 
 Loop invaraint code motion
 ```
@@ -25,7 +25,7 @@ python partial_op_prod_torch.py
 > V is a 3x3000
 
 
-#### Performance on Intel Xeon Platinum 8160 CPU
+### Performance on Intel Xeon Platinum 8160 CPU
 
 |File | Expression    | TF (naive / recommended)  | PyT (naive / recommended)|
 |-----|---------------|---------------------------|--------------|
@@ -34,7 +34,7 @@ python partial_op_prod_torch.py
 |partial_op_prod|(AB)[2,2] | 0.39 / 2e-3| 0.40 / 3e-3|  
 
 
-#### Performance on Intel Xeon E5-2630 CPU
+### Performance on Intel Xeon E5-2630 CPU
 
 |File | Expression    | TF (naive / recommended)  | PyT (naive / recommended)|
 |-----|---------------|---------------------------|--------------|
