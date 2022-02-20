@@ -22,42 +22,33 @@ tf.config.run_functions_eagerly(False)
 n = 3000
 reps = 10
 DTYPE = tf.float32
-nb = int(n/2)
 
 
 @tf.function
-def actual_expr(A,B):
-    ret = A@B
+def lhs(A,H,x):
+    ret = A@x - tf.transpose(H)@(H@x)
     return ret
 
 @tf.function
-def simplified_expr(A1,A2,B1,B2):
-    ret = tf.concat((A1@B1, A2@B2),0)
+def rhs(A,H,x):
+    ret = (A - tf.transpose(H)@H)@x
     return ret
 
-A1 = tf.random.normal([nb, nb], dtype=DTYPE)
-A2 = tf.random.normal([nb, nb], dtype=DTYPE)
-A = tf.concat((tf.concat((A1, tf.zeros([nb,nb])) ,1),tf.concat((tf.zeros([nb,nb]),A2) ,1)),0)
-
-B1 = tf.random.normal([nb, n], dtype=DTYPE)
-B2 = tf.random.normal([nb, n], dtype=DTYPE)
-B = tf.concat((B1,B2),0)
+A = tf.random.normal([n, n], dtype=DTYPE)
+H = tf.random.normal([n, n], dtype=DTYPE)
+x = tf.random.normal([n, 1], dtype=DTYPE)
 
 
 for i in range(reps):
    start = time.perf_counter()
-   ret1 = actual_expr(A,B)
+   ret1 = lhs(A,H,x)
    end = time.perf_counter()
-   print("Actual : ", end-start) 
+   print("LHS : ", end-start) 
 
    start = time.perf_counter()
-   ret2 = simplified_expr(A1,A2,B1,B2)
+   ret2 = rhs(A,H,x)
    end = time.perf_counter()
-   print("Simplified : ", end-start) 
-
-   #ret2 = simplified_expr(A,B)
-
-   #tf.assert_equal(np.round(ret1.numpy(),3), np.round(ret2.numpy(),3))
+   print("RHS : ", end-start) 
     
    tf.print("\n")
 

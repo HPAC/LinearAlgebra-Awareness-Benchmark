@@ -25,12 +25,12 @@ DTYPE = tf.float32
 
 
 @tf.function
-def actual_expr(A,B,C):
+def lhs(A,B,C):
     ret = A@B + A@C
     return ret
 
 @tf.function
-def simplified_expr(A,B,C):
+def rhs(A,B,C):
     ret = A@(B+C)
     return ret
 
@@ -41,18 +41,14 @@ C = tf.random.normal([n, n], dtype=DTYPE)
 
 for i in range(reps):
    start = time.perf_counter()
-   ret1 = actual_expr(A,B,C)
+   ret1 = lhs(A,B,C)
    end = time.perf_counter()
-   print("Actual : ", end-start) 
+   print("LHS : ", end-start) 
 
    start = time.perf_counter()
-   ret2 = simplified_expr(A,B,C)
+   ret2 = rhs(A,B,C)
    end = time.perf_counter()
-   print("Simplified : ", end-start) 
-
-   #ret2 = simplified_expr(A,B)
-
-   #tf.assert_equal(np.round(ret1.numpy(),3), np.round(ret2.numpy(),3))
+   print("RHS : ", end-start) 
     
    tf.print("\n")
 

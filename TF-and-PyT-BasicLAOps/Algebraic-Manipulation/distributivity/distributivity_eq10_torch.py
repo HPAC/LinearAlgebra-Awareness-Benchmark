@@ -20,34 +20,30 @@ DTYPE = torch.float32
 
 
 @torch.jit.script
-def actual_expr(A,B,C):
-    ret = A@B + A@C
+def lhs(A,H,x):
+    ret = A@x - torch.t(H)@(H@x)
     return ret
 
 @torch.jit.script
-def simplified_expr(A,B,C):
-    ret = A@(B+C)
+def rhs(A,H,x):
+    ret = (A - torch.t(H)@H)@x
     return ret
 
 
 A = torch.randn([n, n], dtype=DTYPE)
-B = torch.randn([n, n], dtype=DTYPE)
-C = torch.randn([n, n], dtype=DTYPE)
+H = torch.randn([n, n], dtype=DTYPE)
+x = torch.randn([n, 1], dtype=DTYPE)
 
 for i in range(reps):
    start = time.perf_counter()
-   ret1 = actual_expr(A,B,C)
+   ret1 = lhs(A,H,x)
    end = time.perf_counter()
-   print("Non Optimized : ", end-start) 
+   print("LHS : ", end-start) 
 
    start = time.perf_counter()
-   ret1 = simplified_expr(A,B,C)
+   ret1 = rhs(A,H,x)
    end = time.perf_counter()
-   print("Optimized : ", end-start) 
-
-   #ret2 = simplified_expr(A,B)
-
-   #tf.assert_equal(ret1, ret2)
+   print("RHS : ", end-start) 
     
    print("\n")
 
